@@ -615,4 +615,44 @@ footer {
     width: 100%;
     text-align: center;
   }
+
+}
+
+/* ============================================================
+   POPUP FORMULARIO
+============================================================ */
+#popup-enviado {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1d4ed8;
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 999;
+}
+
+#popup-enviado.popup-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   ANIMACIONES AL SCROLLEAR
+============================================================ */
+.animar {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animar.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
