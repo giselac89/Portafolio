@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buscador de Recetas | Gisela Croci</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <a href="../../index.html#tarjetas" class="volver">Volver al portfolio</a>
+    <div>
+      <p class="tag">TheMealDB · Fetch API</p>
+      <h1>Buscador de Recetas</h1>
+      <p>Encontrá comidas por nombre, filtrá por categoría y revisá ingredientes principales.</p>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="controles" aria-label="Filtros de recetas">
+      <label for="busqueda">Buscar receta</label>
+      <div class="busqueda-wrap">
+        <input id="busqueda" type="search" placeholder="Ej: pasta, chicken, cake..." autocomplete="off" />
+        <button id="btn-buscar" type="button">Buscar</button>
+      </div>
+
+      <label for="categoria">Categoría</label>
+      <select id="categoria">
+        <option value="">Todas las categorías</option>
+      </select>
+    </section>
+
+    <section>
+      <div class="estado" id="estado">Cargando recetas...</div>
+      <div class="recetas-grid" id="recetas"></div>
+    </section>
+  </main>
+
+  <template id="receta-template">
+    <article class="receta-card">
+      <img class="receta-img" alt="" />
+      <div class="receta-info">
+        <span class="receta-categoria"></span>
+        <h2></h2>
+        <p class="receta-area"></p>
+        <ul class="ingredientes"></ul>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
