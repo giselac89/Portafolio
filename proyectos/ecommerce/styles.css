@@ -162,12 +162,20 @@ button, input {
 .producto-img {
   display: grid;
   place-items: center;
-  min-height: 160px;
+  height: 200px;        /* altura fija */
+  overflow: hidden;     /* recorta lo que sobra */
   background: var(--negro);
   font-family: "DM Serif Display", serif;
   font-size: 3rem;
   color: var(--oro);
   letter-spacing: 0.1em;
+}
+
+.producto-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .producto-info {
@@ -430,4 +438,97 @@ button, input {
   .carrito {
     position: static;
   }
+}
+
+.campo { display: flex; flex-direction: column; gap: 0.25rem; }
+.input-error { border-color: #c0392b !important; background: #fff5f5 !important; }
+.error-msg { font-size: 0.75rem; color: #c0392b; padding-left: 0.2rem; }
+
+.popup-overlay { position: fixed; inset: 0; background: rgba(15,14,12,0.75); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 1rem; }
+.popup-pago { background: var(--crema); border: 1px solid var(--crema-borde); border-radius: 4px; padding: 2.5rem 2rem; max-width: 380px; width: 100%; text-align: center; }
+.popup-tagline { font-size: 0.65rem; letter-spacing: 0.4em; color: var(--gris-suave); text-transform: uppercase; margin-bottom: 0.3rem; }
+.popup-titulo { font-family: "DM Serif Display", serif; font-size: 2rem; font-weight: 400; color: var(--oro); letter-spacing: 0.35em; margin-bottom: 0.5rem; }
+.popup-linea { width: 40px; height: 1px; background: var(--oro); opacity: 0.4; margin: 0 auto 1.5rem; }
+.popup-saludo { font-size: 0.9rem; color: var(--gris-suave); margin-bottom: 0.3rem; }
+.popup-monto { font-size: 1.2rem; font-weight: 500; color: var(--negro); margin-bottom: 1.25rem; }
+.popup-pregunta { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris-suave); margin-bottom: 1rem; }
+.popup-opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+.popup-btn { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 1.25rem 0.75rem; background: var(--blanco); border: 1px solid var(--crema-borde); border-radius: 4px; cursor: pointer; transition: border-color 0.25s ease; }
+.popup-btn:hover { border-color: var(--oro); background: #fffdf8; }
+.popup-btn-icono { font-size: 1.6rem; }
+.popup-btn-label { font-size: 0.82rem; font-weight: 500; color: var(--negro); }
+.popup-btn-sub { font-size: 0.7rem; color: var(--gris-suave); }
+.popup-cancelar { background: transparent; border: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gris-suave); cursor: pointer; text-decoration: underline; }
+.popup-cancelar:hover { color: var(--negro); }
+
+
+.transferencia-info {
+  background: var(--blanco);
+  border: 1px solid var(--crema-borde);
+  border-radius: 4px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  text-align: left;
+  display: grid;
+  gap: 0.6rem;
+}
+.transferencia-item { font-size: 0.85rem; color: var(--texto); }
+.transferencia-descuento {
+  font-size: 0.8rem; color: var(--oro); font-weight: 500;
+  text-align: center; padding-top: 0.5rem;
+  border-top: 1px solid var(--crema-borde);
+}
+.tarjeta-form { display: grid; gap: 0.6rem; margin-bottom: 1rem; }
+.tarjeta-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.tarjeta-form input {
+  width: 100%; min-height: 2.4rem; padding: 0 0.8rem;
+  border: 1px solid var(--crema-borde); border-radius: 2px;
+  background: var(--crema); color: var(--negro);
+  font-size: 0.88rem; outline: none;
+  transition: border-color 0.2s ease;
+}
+.tarjeta-form input:focus { border-color: var(--oro); }
+.tarjeta-form input::placeholder { color: var(--gris-suave); font-size: 0.82rem; }
+.popup-btn-confirmar {
+  width: 100%; min-height: 2.6rem;
+  background: var(--negro); color: var(--oro);
+  border: 1px solid var(--negro); border-radius: 2px;
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.3s ease, color 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+.popup-btn-confirmar:hover { background: var(--oro); color: var(--negro); }
+
+.pago-exito {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+.pago-exito-icono {
+  font-size: 2.5rem;
+  color: var(--oro);
+  border: 2px solid var(--oro);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.pago-exito-titulo {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.3rem;
+  color: var(--negro);
+}
+.pago-exito-monto {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--oro);
+}
+.pago-exito-sub {
+  font-size: 0.82rem;
+  color: var(--gris-suave);
 }
