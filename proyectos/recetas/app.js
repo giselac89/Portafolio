@@ -19,6 +19,69 @@ function ingredientesDe(meal) {
     .slice(0, 5);
 }
 
+function verReceta(id) {
+  fetch("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id)
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      var meal = data.meals[0];
+      mostrarPopupReceta(meal);
+    });
+}
+
+function mostrarPopupReceta(meal) {
+  var overlay = document.createElement("div");
+  overlay.className = "popup-overlay";
+  overlay.id = "popup-receta";
+
+  var ingredientes = Array.from({ length: 20 }, function(_, i) {
+    var nombre = meal["strIngredient" + (i + 1)];
+    var medida = meal["strMeasure" + (i + 1)];
+    return nombre && nombre.trim() ? (medida || "").trim() + " " + nombre.trim() : "";
+  }).filter(Boolean);
+
+  var liItems = ingredientes.map(function(ing) {
+    return "<li>" + ing + "</li>";
+  }).join("");
+
+  var instrucciones = meal.strInstructions
+    ? meal.strInstructions.replace(/\r?\n\r?\n/g, "</p><p>").replace(/\r?\n/g, " ")
+    : "No hay instrucciones disponibles.";
+
+  overlay.innerHTML = `
+    <div class="popup-receta">
+      <div class="popup-receta-header">
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="popup-receta-img" />
+        <div class="popup-receta-titulo">
+          <span class="receta-categoria">${meal.strCategory || ""}</span>
+          <h2>${meal.strMeal}</h2>
+          <p class="receta-area">${meal.strArea ? "Cocina " + meal.strArea : "Cocina internacional"}</p>
+        </div>
+      </div>
+      <div class="popup-receta-cuerpo">
+        <div class="popup-seccion">
+          <h3>Ingredientes completos</h3>
+          <ul class="ingredientes-completos">${liItems}</ul>
+        </div>
+        <div class="popup-seccion">
+          <h3>Instrucciones</h3>
+          <div class="instrucciones"><p>${instrucciones}</p></div>
+        </div>
+      </div>
+      <button class="popup-cerrar" id="cerrar-popup-receta">✕ Cerrar</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  document.getElementById("cerrar-popup-receta").addEventListener("click", function() {
+    overlay.remove();
+  });
+
+  overlay.addEventListener("click", function(e) {
+    if (e.target === overlay) overlay.remove();
+  });
+}
+
 function renderRecetas(lista) {
   recetasEl.innerHTML = "";
 
@@ -44,6 +107,10 @@ function renderRecetas(lista) {
       var li = document.createElement("li");
       li.textContent = ingrediente;
       ingredientesEl.appendChild(li);
+    });
+
+      card.querySelector(".receta-card").addEventListener("click", function() {
+        verReceta(meal.idMeal);
     });
 
     recetasEl.appendChild(card);
@@ -102,3 +169,7 @@ categoriaEl.addEventListener("change", function (event) {
 
 cargarCategorias();
 cargarRecetas("");
+
+document.getElementById("traducir-cerrar").addEventListener("click", function() {
+  document.getElementById("traducir-overlay").remove();
+});

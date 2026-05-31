@@ -1,147 +1,362 @@
-var e = React.createElement;
-var Router = ReactRouterDOM.HashRouter;
-var Switch = ReactRouterDOM.Switch;
-var Route = ReactRouterDOM.Route;
-var Link = ReactRouterDOM.Link;
-var useHistory = ReactRouterDOM.useHistory;
+// ============================================================
+// ÁMBAR — Reservas de restaurante
+// React sin JSX: todo en una página, sin Router
+// ============================================================
 
-function fechaISO(offset) {
-  var fecha = new Date();
-  fecha.setDate(fecha.getDate() + offset);
-  return fecha.toISOString().slice(0, 10);
+var e = React.createElement;
+
+// ------------------------------------------------------------
+// UTILIDADES
+// ------------------------------------------------------------
+var MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+var DIAS_SEMANA = ["lu", "ma", "mi", "ju", "vi", "sá", "do"];
+
+function formatearFecha(fechaStr) {
+  var f = new Date(fechaStr + "T00:00:00");
+  var opciones = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+  return f.toLocaleDateString("es-AR", opciones);
 }
 
-function Calendario(props) {
-  var dias = Array.from({ length: 14 }, function (_, index) {
-    return fechaISO(index);
-  });
+function textoPersonas(n) {
+  if (n === 1) return "persona";
+  return "personas";
+}
 
-  return e("aside", { className: "calendar-card" },
-    e("h2", null, "Calendario"),
-    e("div", { className: "calendar" },
-      dias.map(function (dia) {
-        var numero = new Date(dia + "T00:00:00").getDate();
+// ------------------------------------------------------------
+// COMPONENTE: selector de personas
+// ------------------------------------------------------------
+function SelectorPersonas(props) {
+  var personas = props.personas;
+  var setPersonas = props.setPersonas;
+
+  function sumar() { if (personas < 12) setPersonas(personas + 1); }
+  function restar() { if (personas > 1) setPersonas(personas - 1); }
+
+  return e("section", { className: "seccion" },
+    e("h2", { className: "seccion-titulo" }, "¿Cuántos comensales?"),
+    e("p", { className: "seccion-sub" }, "Seleccioná el tamaño de tu grupo"),
+
+    e("div", { className: "personas-grid" },
+      [1, 2, 3, 4].map(function (n) {
         return e("button", {
-          key: dia,
+          key: n,
           type: "button",
-          className: "day" + (props.fecha === dia ? " selected" : ""),
-          onClick: function () { props.onSelect(dia); }
-        }, numero);
+          className: "persona-btn" + (personas === n ? " activo" : ""),
+          onClick: function () { setPersonas(n); }
+        },
+          e("span", { className: "persona-numero" }, n),
+          e("span", { className: "persona-label" }, textoPersonas(n))
+        );
+      })
+    ),
+
+    e("div", { className: "contador" },
+      e("button", { type: "button", className: "contador-btn", onClick: restar }, "−"),
+      e("div", { style: { textAlign: "center" } },
+        e("div", { className: "contador-valor" }, personas),
+        e("div", { className: "contador-texto" },
+          personas === 1 ? "Solo" : "Con compañía"
+        )
+      ),
+      e("button", { type: "button", className: "contador-btn", onClick: sumar }, "+")
+    )
+  );
+}
+
+// ------------------------------------------------------------
+// COMPONENTE: calendario mensual
+// ------------------------------------------------------------
+function Calendario(props) {
+  var fecha = props.fecha;
+  var setFecha = props.setFecha;
+
+  var hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  var hoyISO = hoy.toISOString().slice(0, 10);
+
+  var mesState = React.useState(new Date(fecha + "T00:00:00").getMonth());
+  var mes = mesState[0];
+  var setMes = mesState[1];
+
+  var anioState = React.useState(new Date(fecha + "T00:00:00").getFullYear());
+  var anio = anioState[0];
+  var setAnio = anioState[1];
+
+  function mesAnterior() {
+    if (mes === 0) { setMes(11); setAnio(anio - 1); }
+    else { setMes(mes - 1); }
+  }
+
+  function mesSiguiente() {
+    if (mes === 11) { setMes(0); setAnio(anio + 1); }
+    else { setMes(mes + 1); }
+  }
+
+  // Primer día del mes (lunes = 0)
+  var primerDia = new Date(anio, mes, 1);
+  var diaInicio = primerDia.getDay();
+  diaInicio = diaInicio === 0 ? 6 : diaInicio - 1; // Ajustar a lunes = 0
+
+  var diasEnMes = new Date(anio, mes + 1, 0).getDate();
+
+  var celdas = [];
+
+  // Celdas vacías antes del primer día
+  for (var i = 0; i < diaInicio; i++) {
+    celdas.push(e("div", { key: "vacio-" + i, className: "cal-dia vacio" }));
+  }
+
+  // Días del mes
+  for (var d = 1; d <= diasEnMes; d++) {
+    var fechaDia = anio + "-" + String(mes + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+    var esPasado = new Date(fechaDia + "T00:00:00") < hoy;
+    var esHoy = fechaDia === hoyISO;
+    var esSeleccionado = fechaDia === fecha;
+
+    var clases = "cal-dia";
+    if (esPasado) clases += " disabled";
+    if (esHoy) clases += " hoy";
+    if (esSeleccionado) clases += " selected";
+
+    (function (f, pasado) {
+      celdas.push(
+        e("button", {
+          key: f,
+          type: "button",
+          className: clases,
+          disabled: pasado,
+          onClick: function () { if (!pasado) setFecha(f); }
+        }, new Date(f + "T00:00:00").getDate())
+      );
+    })(fechaDia, esPasado);
+  }
+
+  return e("section", { className: "seccion" },
+    e("h2", { className: "seccion-titulo" }, "¿Cuándo te gustaría visitarnos?"),
+    e("p", { className: "seccion-sub" }, "Seleccioná tu fecha preferida"),
+
+    e("div", { className: "cal-header" },
+      e("button", { type: "button", className: "cal-nav", onClick: mesAnterior }, "‹"),
+      e("span", { className: "cal-mes" }, MESES[mes] + " " + anio),
+      e("button", { type: "button", className: "cal-nav", onClick: mesSiguiente }, "›")
+    ),
+
+    e("div", { className: "cal-dias-semana" },
+      DIAS_SEMANA.map(function (dia) {
+        return e("span", { key: dia, className: "cal-dia-semana" }, dia);
+      })
+    ),
+
+    e("div", { className: "cal-grid" }, celdas),
+
+    fecha ? e("div", { className: "fecha-seleccionada" },
+      e("p", { className: "fecha-label" }, "Fecha seleccionada"),
+      e("p", { className: "fecha-valor" }, formatearFecha(fecha))
+    ) : null
+  );
+}
+
+// ------------------------------------------------------------
+// COMPONENTE: selector de horarios
+// ------------------------------------------------------------
+function SelectorHorario(props) {
+  var hora = props.hora;
+  var setHora = props.setHora;
+  var horarios = ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"];
+
+  return e("section", { className: "seccion" },
+    e("h2", { className: "seccion-titulo" }, "Seleccioná una hora"),
+    e("p", { className: "seccion-sub" }, "Elegí un horario disponible"),
+
+    e("div", { className: "horarios-grid" },
+      horarios.map(function (h) {
+        return e("button", {
+          key: h,
+          type: "button",
+          className: "hora-btn" + (hora === h ? " activo" : ""),
+          onClick: function () { setHora(h); }
+        },
+          e("span", { className: "hora-icono" }, "🕐"),
+          h
+        );
       })
     )
   );
 }
 
-function FormularioReserva(props) {
-  var history = useHistory();
-  var initial = { nombre: "", email: "", fecha: fechaISO(1), hora: "20:00", personas: "2", notas: "" };
-  var formState = React.useState(initial);
+// ------------------------------------------------------------
+// COMPONENTE: datos de contacto + botón confirmar
+// ------------------------------------------------------------
+function DatosContacto(props) {
+  var form = props.form;
+  var errores = props.errores;
+  var updateField = props.updateField;
+  var onSubmit = props.onSubmit;
+  var personas = props.personas;
+
+  return e("section", { className: "seccion" },
+    e("h2", { className: "seccion-titulo" }, "Tus datos"),
+    e("p", { className: "seccion-sub" }, "Para confirmar la reserva"),
+
+    e("div", { className: "contacto-grid" },
+      e("div", { className: "campo" },
+        e("span", { className: "campo-label" }, "Nombre"),
+        e("input", {
+          name: "nombre",
+          placeholder: "Tu nombre",
+          value: form.nombre,
+          onChange: updateField
+        }),
+        errores.nombre ? e("p", { className: "error" }, errores.nombre) : null
+      ),
+      e("div", { className: "campo" },
+        e("span", { className: "campo-label" }, "Email"),
+        e("input", {
+          name: "email",
+          type: "email",
+          placeholder: "tu@email.com",
+          value: form.email,
+          onChange: updateField
+        }),
+        errores.email ? e("p", { className: "error" }, errores.email) : null
+      )
+    ),
+
+    errores.fecha ? e("p", { className: "error", style: { marginTop: "0.75rem" } }, errores.fecha) : null,
+    errores.hora ? e("p", { className: "error", style: { marginTop: "0.5rem" } }, errores.hora) : null,
+
+    e("button", {
+      type: "button",
+      className: "btn-confirmar",
+      onClick: onSubmit
+    }, "🍽️ Confirmar reserva para " + personas + " " + textoPersonas(personas))
+  );
+}
+
+// ------------------------------------------------------------
+// COMPONENTE: pantalla de confirmación
+// ------------------------------------------------------------
+function Confirmacion(props) {
+  var reserva = props.reserva;
+  var onNueva = props.onNueva;
+
+  return e("section", { className: "seccion", style: { textAlign: "center" } },
+    e("div", { className: "confirm-icono" }, "✓"),
+    e("h2", { className: "seccion-titulo" }, "¡Reserva confirmada!"),
+    e("p", { className: "seccion-sub" }, "Te esperamos en Ámbar, " + reserva.nombre),
+
+    e("div", { className: "confirm-detalle" },
+      e("div", { className: "confirm-item" },
+        e("span", { className: "confirm-item-label" }, "Fecha"),
+        e("span", { className: "confirm-item-valor" }, formatearFecha(reserva.fecha))
+      ),
+      e("div", { className: "confirm-item" },
+        e("span", { className: "confirm-item-label" }, "Horario"),
+        e("span", { className: "confirm-item-valor" }, reserva.hora + " hs")
+      ),
+      e("div", { className: "confirm-item" },
+        e("span", { className: "confirm-item-label" }, "Comensales"),
+        e("span", { className: "confirm-item-valor" }, reserva.personas + " " + textoPersonas(reserva.personas))
+      ),
+      e("div", { className: "confirm-item" },
+        e("span", { className: "confirm-item-label" }, "Email"),
+        e("span", { className: "confirm-item-valor" }, reserva.email)
+      )
+    ),
+
+    e("button", { type: "button", className: "btn-nueva", onClick: onNueva }, "Hacer otra reserva")
+  );
+}
+
+// ------------------------------------------------------------
+// COMPONENTE: app principal
+// ------------------------------------------------------------
+function App() {
+  var manana = new Date();
+  manana.setDate(manana.getDate() + 1);
+  var mananaISO = manana.toISOString().slice(0, 10);
+
+  var personasState = React.useState(2);
+  var personas = personasState[0];
+  var setPersonas = personasState[1];
+
+  var fechaState = React.useState(mananaISO);
+  var fecha = fechaState[0];
+  var setFecha = fechaState[1];
+
+  var horaState = React.useState("20:00");
+  var hora = horaState[0];
+  var setHora = horaState[1];
+
+  var formState = React.useState({ nombre: "", email: "" });
   var form = formState[0];
   var setForm = formState[1];
+
   var erroresState = React.useState({});
   var errores = erroresState[0];
   var setErrores = erroresState[1];
 
-  function updateField(event) {
-    setForm(Object.assign({}, form, { [event.target.name]: event.target.value }));
-  }
-
-  function setFecha(fecha) {
-    setForm(Object.assign({}, form, { fecha: fecha }));
-  }
-
-  function submit(event) {
-    event.preventDefault();
-    var nuevosErrores = validarReserva(form);
-    setErrores(nuevosErrores);
-
-    if (Object.keys(nuevosErrores).length === 0) {
-      props.onConfirm(form);
-      history.push("/confirmacion");
-    }
-  }
-
-  return e("div", { className: "panel" },
-    e("form", { className: "form-card", onSubmit: submit, noValidate: true },
-      e("div", { className: "form-grid" },
-        e("label", null, "Nombre",
-          e("input", { name: "nombre", value: form.nombre, onChange: updateField, placeholder: "Tu nombre" }),
-          errores.nombre ? e("p", { className: "error" }, errores.nombre) : null
-        ),
-        e("label", null, "Email",
-          e("input", { name: "email", value: form.email, onChange: updateField, placeholder: "tu@email.com" }),
-          errores.email ? e("p", { className: "error" }, errores.email) : null
-        ),
-        e("label", null, "Fecha",
-          e("input", { name: "fecha", type: "date", value: form.fecha, onChange: updateField }),
-          errores.fecha ? e("p", { className: "error" }, errores.fecha) : null
-        ),
-        e("label", null, "Horario",
-          e("select", { name: "hora", value: form.hora, onChange: updateField },
-            ["19:00", "20:00", "21:00", "22:00"].map(function (hora) {
-              return e("option", { key: hora, value: hora }, hora);
-            })
-          ),
-          errores.hora ? e("p", { className: "error" }, errores.hora) : null
-        ),
-        e("label", null, "Personas",
-          e("input", { name: "personas", type: "number", min: "1", max: "8", value: form.personas, onChange: updateField }),
-          errores.personas ? e("p", { className: "error" }, errores.personas) : null
-        ),
-        e("label", { className: "full" }, "Notas",
-          e("input", { name: "notas", value: form.notas, onChange: updateField, placeholder: "Alergias, preferencias o comentarios" })
-        )
-      ),
-      e("button", { className: "submit", type: "submit" }, "Confirmar reserva")
-    ),
-    e(Calendario, { fecha: form.fecha, onSelect: setFecha })
-  );
-}
-
-function Confirmacion(props) {
-  var history = useHistory();
-
-  if (!props.reserva) {
-    return e("section", { className: "confirm-card" },
-      e("h2", null, "Todavía no hay reserva"),
-      e("p", null, "Completá el formulario para ver la confirmación."),
-      e("button", { className: "submit", onClick: function () { history.push("/"); } }, "Ir al formulario")
-    );
-  }
-
-  return e("section", { className: "confirm-card" },
-    e("h2", null, "Reserva confirmada"),
-    e("p", null, e("strong", null, props.reserva.nombre), ", te esperamos el ", e("strong", null, props.reserva.fecha), " a las ", e("strong", null, props.reserva.hora), "."),
-    e("p", null, "Mesa para ", props.reserva.personas, " personas."),
-    props.reserva.notas ? e("p", null, "Notas: ", props.reserva.notas) : null,
-    e("button", { className: "submit", onClick: function () { history.push("/"); } }, "Crear otra reserva")
-  );
-}
-
-function App() {
   var reservaState = React.useState(null);
   var reserva = reservaState[0];
   var setReserva = reservaState[1];
 
-  return e(Router, null,
-    e(React.Fragment, null,
-      e("header", { className: "hero" },
-        e("a", { className: "volver", href: "../../index.html#tarjetas" }, "Volver al portfolio"),
-        e("div", null,
-          e("h1", null, "Reservas Cálidas"),
-          e("p", null, "Formulario controlado con validación, calendario simple, React Router y pantalla de confirmación.")
-        )
+  function updateField(event) {
+    setForm(Object.assign({}, form, { [event.target.name]: event.target.value }));
+    setErrores(Object.assign({}, errores, { [event.target.name]: "" }));
+  }
+
+  function confirmar() {
+    var datos = {
+      nombre: form.nombre,
+      email: form.email,
+      fecha: fecha,
+      hora: hora,
+      personas: personas
+    };
+
+    var nuevosErrores = validarReserva(datos);
+    setErrores(nuevosErrores);
+
+    if (Object.keys(nuevosErrores).length === 0) {
+      setReserva(datos);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function nuevaReserva() {
+    setReserva(null);
+    setPersonas(2);
+    setFecha(mananaISO);
+    setHora("20:00");
+    setForm({ nombre: "", email: "" });
+    setErrores({});
+  }
+
+  return e(React.Fragment, null,
+    e("header", { className: "header" },
+      e("div", { className: "header-top" },
+        e("a", { className: "volver", href: "../../index.html#tarjetas" }, "← Portfolio")
       ),
-      e("main", { className: "shell" },
-        e("nav", { className: "tabs", "aria-label": "Navegación de reservas" },
-          e(Link, { to: "/" }, "Formulario"),
-          e(Link, { to: "/confirmacion" }, "Confirmación")
-        ),
-        e(Switch, null,
-          e(Route, { path: "/confirmacion" }, e(Confirmacion, { reserva: reserva })),
-          e(Route, { path: "/" }, e(FormularioReserva, { onConfirm: setReserva }))
-        )
-      )
+      e("h1", { className: "brand-name" }, "Santorini Garden"),
+      e("p", { className: "brand-sub" }, "reservas")
+    ),
+
+    e("main", { className: "shell" },
+      reserva
+        ? e(Confirmacion, { reserva: reserva, onNueva: nuevaReserva })
+        : e(React.Fragment, null,
+            e(SelectorPersonas, { personas: personas, setPersonas: setPersonas }),
+            e(Calendario, { fecha: fecha, setFecha: setFecha }),
+            e(SelectorHorario, { hora: hora, setHora: setHora }),
+            e(DatosContacto, {
+              form: form,
+              errores: errores,
+              updateField: updateField,
+              onSubmit: confirmar,
+              personas: personas
+            })
+          )
     )
   );
 }

@@ -19,12 +19,14 @@ body {
 }
 
 .app-header {
-  min-height: 42vh;
-  padding: 1.5rem clamp(1rem, 4vw, 4rem) 3rem;
+  min-height: 35vh;
+  padding: 1.5rem clamp(1rem, 4vw, 4rem) 5rem;
   color: #fff;
   background: linear-gradient(135deg, var(--violeta), var(--borravino) 65%, var(--lila));
-  display: grid;
-  align-content: space-between;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: flex-end;
 }
 
 .volver {
@@ -33,6 +35,7 @@ body {
   text-decoration: none;
   font-weight: 700;
   border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  margin-left: auto;
 }
 
 .tag {
@@ -112,7 +115,7 @@ button {
 
 .recetas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
@@ -158,4 +161,248 @@ h2 {
   margin: 0;
   padding-left: 1.1rem;
   color: #473453;
+}
+
+.receta-card { cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.receta-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(36,19,55,0.15); }
+
+.popup-overlay { position: fixed; inset: 0; background: rgba(36,19,55,0.7); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 1rem; overflow-y: auto; }
+
+.popup-receta {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 720px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(36,19,55,0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-receta-header {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid #ede8f5;
+  flex-wrap: wrap;
+}
+
+.popup-receta-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.popup-receta-titulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.popup-receta-titulo h2 {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.popup-receta-cuerpo {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.popup-seccion h3 {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--violeta);
+  margin-bottom: 0.75rem;
+}
+
+.ingredientes-completos {
+  padding-left: 1.1rem;
+  color: #473453;
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.instrucciones {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #3d2b4f;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.instrucciones p { margin-bottom: 0.75rem; }
+
+.popup-cerrar {
+  margin: 0 1.5rem 1.5rem auto;
+  padding: 0.5rem 1.5rem;
+  background: var(--violeta);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+@media (max-width: 600px) {
+  .popup-receta-cuerpo { grid-template-columns: 1fr; }
+  .popup-receta-img { width: 100%; height: 200px; }
+}
+
+.traducir-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #241337;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.78rem;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  z-index: 998;
+  animation: toastEntrar 0.4s ease, toastSalir 0.4s ease 5s forwards;
+}
+
+.traducir-toast-cerrar {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  min-height: unset;
+}
+
+@keyframes toastEntrar {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes toastSalir {
+  from { opacity: 1; }
+  to   { opacity: 0; pointer-events: none; }
+}
+.traducir-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 19, 55, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.traducir-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 32px 64px rgba(36, 19, 55, 0.35);
+  animation: slideUp 0.5s ease;
+}
+
+.traducir-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--violeta);
+  margin-bottom: 0.75rem;
+}
+
+.traducir-titulo {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.6rem;
+  color: var(--tinta);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.traducir-texto {
+  font-size: 0.9rem;
+  color: #6b5875;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.traducir-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: #f8f3ff;
+  border: 1px solid #ede8f5;
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.88rem;
+  color: var(--tinta);
+}
+
+.traducir-flecha {
+  color: var(--violeta);
+  font-size: 1rem;
+}
+
+.traducir-opcion {
+  background: #fff;
+  border: 1px solid #ddd0ef;
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--violeta);
+}
+
+.traducir-btn {
+  width: 100%;
+  min-height: 2.8rem;
+  background: var(--violeta);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.traducir-btn:hover {
+  background: #5b21b6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 700px) {
+  .recetas-grid {
+    grid-template-columns: 1fr;
+  }
 }
