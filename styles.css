@@ -466,59 +466,35 @@ section:nth-child(even) {
   border-radius: var(--radius-md);
 }
 
-.proyecto-recetas {
-  background: linear-gradient(135deg, #4c1d95, #7f1d1d 62%, #ddd6fe);
-}
-
-.proyecto-recetas .preview-barra,
-.proyecto-recetas .preview-grid span {
-  background: #c4b5fd;
-}
-
-.proyecto-recetas .preview-buscador {
-  background: #fff;
-}
-
 .proyecto-ecommerce {
-  background: linear-gradient(135deg, #0f172a 0%, #c9a96e 54%, #f8fafc 55%);
+  background: url("img/img-minuaturas/Ecommerce.png") center/cover no-repeat;
+  border-radius: 12px;
 }
 
-.proyecto-ecommerce .preview-barra,
-.proyecto-ecommerce .preview-productos span {
-  background: #f8fafc;
-}
-
-.proyecto-ecommerce .preview-carrito {
-  background: #c9a96e;
-}
-
-.proyecto-trivia {
-  background: linear-gradient(135deg, #581c87, #7c3aed 58%, #22d3ee);
-}
-
-.proyecto-trivia .preview-timer {
-  background: #facc15;
-  color: #581c87;
-}
-
-.proyecto-trivia .preview-pregunta,
-.proyecto-trivia .preview-opciones span {
-  background: rgba(255, 255, 255, 0.92);
+.proyecto-recetas {
+  background: url("img/img-minuaturas/Recetas.png") center/cover no-repeat;
+  border-radius: 12px;
 }
 
 .proyecto-reservas {
-  background: linear-gradient(135deg, #fff1d6, #e7b98f 52%, #c65f3d);
+  background: url("img/img-minuaturas/Reservas.png") center/cover no-repeat;
+  border-radius: 12px;
 }
 
-.proyecto-reservas .preview-mesa {
-  background: #5c3826;
-  box-shadow: 0 0 0 12px rgba(92, 56, 38, 0.18);
+.tarjeta-imagen-wrapper {
+  width: 320px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
-.proyecto-reservas .preview-form span,
-.proyecto-reservas .preview-calendario {
-  background: #fffaf0;
+.tarjeta-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
+
 
 .proyecto-lista {
   display: grid;
