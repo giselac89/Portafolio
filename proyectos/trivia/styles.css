@@ -1,0 +1,147 @@
+:root {
+  --purple: #7c3aed;
+  --purple-dark: #4c1d95;
+  --yellow: #facc15;
+  --cyan: #22d3ee;
+  --ink: #24143f;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "DM Sans", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple) 58%, var(--cyan));
+}
+
+button {
+  font: inherit;
+}
+
+.page {
+  width: min(980px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 4rem;
+}
+
+.volver {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 800;
+  border-bottom: 2px solid var(--yellow);
+}
+
+.hero {
+  padding: 4rem 0 2rem;
+  color: var(--white);
+}
+
+.hero p {
+  max-width: 58ch;
+  color: #efe7ff;
+}
+
+h1 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(2.8rem, 10vw, 6rem);
+  line-height: 0.95;
+}
+
+.panel {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eadcff;
+  font-weight: 800;
+}
+
+.timer {
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  color: var(--purple-dark);
+  background: var(--yellow);
+}
+
+.question {
+  padding: 1.4rem;
+}
+
+.question h2 {
+  margin: 0 0 1.2rem;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.answers button {
+  min-height: 4rem;
+  border: 2px solid #ddd6fe;
+  border-radius: 10px;
+  padding: 0.8rem;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.answers button:hover {
+  border-color: var(--purple);
+  background: #f5f3ff;
+}
+
+.results {
+  padding: 2rem;
+  text-align: center;
+}
+
+.results strong {
+  display: block;
+  margin: 1rem 0;
+  color: var(--purple);
+  font-size: clamp(2rem, 8vw, 4rem);
+}
+
+.primary {
+  min-height: 2.8rem;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 1.2rem;
+  color: var(--purple-dark);
+  background: var(--yellow);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.notice {
+  padding: 2rem;
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  .answers {
+    grid-template-columns: 1fr;
+  }
+}

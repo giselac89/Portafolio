@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gisela Croci — Analista de Integración Jr. y estudiante de Desarrollo de Software. Portfolio con proyectos en HTML, CSS, JavaScript y más." />
+  <meta name="keywords" content="Gisela Croci, desarrolladora web, frontend, portfolio, Buenos Aires" />
+  <meta name="author" content="Gisela Croci" />
   <title>Gisela Croci | Portafolio Personal</title>
 
   <!-- Google Fonts: "DM Sans" -->
@@ -67,61 +70,132 @@
     <section id="tarjetas">
       <div class="seccion-inner">
         <h2 class="seccion-titulo animar">Proyectos</h2>
-        <p class="seccion-subtitulo animar">Lo que estoy construyendo mientras aprendo.</p>
+        <p class="seccion-subtitulo animar">Aplicaciones web pensadas para practicar frontend, consumo de APIs y React.</p>
 
         <div class="tarjetas-grid">
 
           <article class="tarjeta animar">
             <div class="tarjeta-imagen-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80"
-                alt="Pantalla de código en un monitor"
-                class="tarjeta-imagen"
-              />
+              <div class="proyecto-preview proyecto-recetas" aria-hidden="true">
+                <div class="preview-barra"></div>
+                <div class="preview-buscador"></div>
+                <div class="preview-grid">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
             </div>
             <div class="tarjeta-cuerpo">
-              <span class="tarjeta-tag">HTML · CSS</span>
-              <h3 class="tarjeta-titulo">Portafolio Personal</h3>
+              <span class="tarjeta-tag">API · JavaScript</span>
+              <h3 class="tarjeta-titulo">Buscador de Recetas</h3>
               <p class="tarjeta-texto">
-                Mi primer proyecto web: este mismo sitio. Construido con HTML semántico,
-                CSS.
+                App con input de búsqueda, filtros por categoría y cards con imagen e ingredientes usando TheMealDB.
               </p>
+              <ul class="proyecto-lista">
+                <li>Fetch API y manejo del DOM</li>
+                <li>Array functions para filtrar resultados</li>
+              </ul>
+              <div class="proyecto-paleta" aria-label="Paleta violeta, borravino y lila">
+                <span style="--swatch: #6d28d9"></span>
+                <span style="--swatch: #7f1d1d"></span>
+                <span style="--swatch: #c4b5fd"></span>
+              </div>
+              <a class="btn-proyecto" href="proyectos/recetas/index.html">Abrir app</a>
             </div>
           </article>
 
           <article class="tarjeta animar">
             <div class="tarjeta-imagen-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=80"
-                alt="Laptop con código abierto sobre un escritorio"
-                class="tarjeta-imagen"
-              />
+              <div class="proyecto-preview proyecto-ecommerce" aria-hidden="true">
+                <div class="preview-barra"></div>
+                <div class="preview-productos">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="preview-carrito"></div>
+              </div>
             </div>
             <div class="tarjeta-cuerpo">
-              <span class="tarjeta-tag">En progreso</span>
-              <h3 class="tarjeta-titulo">Próximo Proyecto</h3>
+              <span class="tarjeta-tag">React · Context</span>
+              <h3 class="tarjeta-titulo">E-commerce con Carrito</h3>
               <p class="tarjeta-texto">
-                Actualmente explorando JavaScript para agregar interactividad.
-                Pronto habrá algo concreto acá.
+                Catálogo de productos, carrito lateral persistente y checkout con formulario controlado.
               </p>
+              <ul class="proyecto-lista">
+                <li>useReducer para estado del carrito</li>
+                <li>Context y validación de checkout</li>
+              </ul>
+              <div class="proyecto-paleta" aria-label="Paleta azul marino, blanco y gris">
+                <span style="--swatch: #0f172a"></span>
+                <span style="--swatch: #ffffff"></span>
+                <span style="--swatch: #c9a96e"></span>
+              </div>
+              <a class="btn-proyecto" href="proyectos/ecommerce/index.html">Abrir app</a>
             </div>
           </article>
 
           <article class="tarjeta animar">
             <div class="tarjeta-imagen-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&q=80"
-                alt="Líneas de código coloridas en pantalla oscura"
-                class="tarjeta-imagen"
-              />
+              <div class="proyecto-preview proyecto-trivia" aria-hidden="true">
+                <div class="preview-timer">30</div>
+                <div class="preview-pregunta"></div>
+                <div class="preview-opciones">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
             </div>
             <div class="tarjeta-cuerpo">
-              <span class="tarjeta-tag">Aprendizaje</span>
-              <h3 class="tarjeta-titulo">Ejercicios</h3>
+              <span class="tarjeta-tag">React · API</span>
+              <h3 class="tarjeta-titulo">Juego de Trivia</h3>
               <p class="tarjeta-texto">
-                Colección de experimentos.
-                El caos controlado también es un proyecto.
+                Preguntas con timer, puntaje acumulado y pantalla final de resultados usando Open Trivia DB.
               </p>
+              <ul class="proyecto-lista">
+                <li>useEffect y useState</li>
+                <li>Renderizado condicional por estado</li>
+              </ul>
+              <div class="proyecto-paleta" aria-label="Paleta púrpura, amarillo y cyan">
+                <span style="--swatch: #7c3aed"></span>
+                <span style="--swatch: #facc15"></span>
+                <span style="--swatch: #22d3ee"></span>
+              </div>
+              <a class="btn-proyecto" href="proyectos/trivia/index.html">Abrir app</a>
+            </div>
+          </article>
+
+          <article class="tarjeta animar">
+            <div class="tarjeta-imagen-wrapper">
+              <div class="proyecto-preview proyecto-reservas" aria-hidden="true">
+                <div class="preview-mesa"></div>
+                <div class="preview-form">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="preview-calendario"></div>
+              </div>
+            </div>
+            <div class="tarjeta-cuerpo">
+              <span class="tarjeta-tag">React · Testing</span>
+              <h3 class="tarjeta-titulo">Reservas para Restaurante</h3>
+              <p class="tarjeta-texto">
+                Formulario de reserva con validación, calendario simple y pantalla de confirmación.
+              </p>
+              <ul class="proyecto-lista">
+                <li>Formularios controlados y React Router</li>
+                <li>Testing básico con Jest</li>
+              </ul>
+              <div class="proyecto-paleta" aria-label="Paleta terracota, crema y marrón">
+                <span style="--swatch: #c65f3d"></span>
+                <span style="--swatch: #fff1d6"></span>
+                <span style="--swatch: #5c3826"></span>
+              </div>
+              <a class="btn-proyecto" href="proyectos/reservas/index.html">Abrir app</a>
             </div>
           </article>
 
@@ -289,17 +363,17 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <span class="logo footer-logo">Nova<span class="logo-accent">Byte</span></span>
+      <span class="logo footer-logo">Gisela<span class="logo-accent">Croci</span></span>
       <p class="footer-texto">Hecho con HTML, CSS y mucha curiosidad · 2026</p>
       <div class="footer-links">
-        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/giselac89" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/giselacroci/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="#contacto">Contacto</a>
       </div>
     </div>
   </footer>
 
-  <div id="popup-enviado">
+  <div id="popup-enviado" role="alert" aria-live="polite">
     ✅ ¡Mensaje enviado! Me pondré en contacto pronto.
   </div>
 

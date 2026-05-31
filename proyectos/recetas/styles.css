@@ -1,0 +1,161 @@
+:root {
+  --violeta: #6d28d9;
+  --borravino: #7f1d1d;
+  --lila: #c4b5fd;
+  --tinta: #241337;
+  --fondo: #f8f3ff;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: var(--tinta);
+  background: var(--fondo);
+}
+
+.app-header {
+  min-height: 42vh;
+  padding: 1.5rem clamp(1rem, 4vw, 4rem) 3rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--violeta), var(--borravino) 65%, var(--lila));
+  display: grid;
+  align-content: space-between;
+}
+
+.volver {
+  width: fit-content;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.tag {
+  margin: 0 0 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(2.5rem, 9vw, 5rem);
+  line-height: 1;
+}
+
+.app-header p:last-child {
+  max-width: 58ch;
+  font-size: 1.1rem;
+}
+
+.app-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: -2.5rem auto 4rem;
+}
+
+.controles {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(36, 19, 55, 0.14);
+}
+
+.controles label {
+  font-weight: 700;
+}
+
+.busqueda-wrap {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+input,
+select,
+button {
+  min-height: 2.8rem;
+  border: 1px solid #ddd0ef;
+  border-radius: 8px;
+  font: inherit;
+}
+
+input,
+select {
+  flex: 1 1 240px;
+  padding: 0 0.9rem;
+  background: #fbf8ff;
+}
+
+button {
+  padding: 0 1.4rem;
+  border: 0;
+  color: #fff;
+  background: var(--violeta);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.estado {
+  margin: 2rem 0 1rem;
+  color: #6b5875;
+  font-weight: 700;
+}
+
+.recetas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.receta-card {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 10px 28px rgba(36, 19, 55, 0.1);
+}
+
+.receta-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.receta-info {
+  padding: 1rem;
+}
+
+.receta-categoria {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  color: var(--borravino);
+  background: #f3e8ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+}
+
+.receta-area {
+  margin: 0 0 0.8rem;
+  color: #6b5875;
+}
+
+.ingredientes {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #473453;
+}

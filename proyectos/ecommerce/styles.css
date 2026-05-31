@@ -1,0 +1,433 @@
+/* ============================================================
+   AURORA — Accesorios de lujo
+   Paleta: negro noche + oro suave + crema
+============================================================ */
+:root {
+  --negro:   #0f0e0c;
+  --carbon:  #1c1a15;
+  --oro:     #c9a96e;
+  --oro-claro: #e0c99a;
+  --crema:   #f5f0e8;
+  --crema-borde: #e0d5c0;
+  --gris-suave: #8a7a5a;
+  --texto:   #1c1a15;
+  --blanco:  #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+}
+
+button, input {
+  font: inherit;
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+.store-header {
+  background: var(--negro);
+  padding: 1.5rem clamp(1rem, 4vw, 4rem) 4rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.volver {
+  color: var(--gris-suave);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--carbon);
+  padding-bottom: 2px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.volver:hover {
+  color: var(--oro);
+  border-color: var(--oro);
+}
+
+.cart-toggle {
+  min-height: 2.4rem;
+  padding: 0 1.2rem;
+  background: transparent;
+  border: 1px solid var(--oro);
+  border-radius: 2px;
+  color: var(--oro);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.cart-toggle:hover {
+  background: var(--oro);
+  color: var(--negro);
+}
+
+/* Logo AURORA */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand-tagline {
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  color: var(--gris-suave);
+  text-transform: uppercase;
+}
+
+.brand-nombre {
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  font-weight: 400;
+  color: var(--oro);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brand-linea {
+  width: 48px;
+  height: 1px;
+  background: var(--oro);
+  opacity: 0.4;
+}
+
+.brand-sub {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--gris-suave);
+  text-transform: uppercase;
+}
+
+.store-header > p {
+  display: none;
+}
+
+/* ============================================================
+   LAYOUT PRINCIPAL
+============================================================ */
+.layout {
+  width: min(1180px, calc(100% - 2rem));
+  margin: -2rem auto 4rem;
+  display: grid;
+  grid-template-columns: 1fr minmax(300px, 360px);
+  gap: 1.2rem;
+  align-items: start;
+}
+
+/* ============================================================
+   CATÁLOGO
+============================================================ */
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.producto {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--crema-borde);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--blanco);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(15, 14, 12, 0.1);
+}
+
+.producto-img {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  background: var(--negro);
+  font-family: "DM Serif Display", serif;
+  font-size: 3rem;
+  color: var(--oro);
+  letter-spacing: 0.1em;
+}
+
+.producto-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+}
+
+.producto-categoria {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--gris-suave);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.producto h2 {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--negro);
+  margin-bottom: 0.4rem;
+}
+
+.producto p {
+  font-size: 0.85rem;
+  color: var(--gris-suave);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.producto-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.precio {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--oro);
+}
+
+.producto button {
+  padding: 0.5rem 1rem;
+  background: var(--negro);
+  color: var(--oro);
+  border: 1px solid var(--negro);
+  border-radius: 2px;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.producto button:hover {
+  background: var(--oro);
+  color: var(--negro);
+  border-color: var(--oro);
+}
+
+/* ============================================================
+   CARRITO
+============================================================ */
+.carrito {
+  position: sticky;
+  top: 1rem;
+  background: var(--blanco);
+  border: 1px solid var(--crema-borde);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.carrito h2,
+.checkout h2 {
+  font-family: "DM Serif Display", serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--negro);
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--crema-borde);
+  margin: 0;
+}
+
+.lineas {
+  padding: 1rem 1.2rem;
+  display: grid;
+  gap: 0.75rem;
+  min-height: 60px;
+}
+
+.lineas > p {
+  font-size: 0.85rem;
+  color: var(--gris-suave);
+  font-style: italic;
+}
+
+.linea {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--crema-borde);
+}
+
+.linea:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.linea strong {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--negro);
+}
+
+.linea small {
+  font-size: 0.78rem;
+  color: var(--oro);
+}
+
+.linea-controles {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.linea-controles button {
+  width: 1.8rem;
+  height: 1.8rem;
+  background: transparent;
+  border: 1px solid var(--crema-borde);
+  border-radius: 2px;
+  color: var(--texto);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.linea-controles button:hover {
+  border-color: var(--oro);
+  color: var(--oro);
+}
+
+.linea-controles span {
+  font-size: 0.85rem;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+.total {
+  padding: 1rem 1.2rem;
+  border-top: 1px solid var(--crema-borde);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total span:first-child {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gris-suave);
+}
+
+.total span:last-child {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--negro);
+}
+
+/* ============================================================
+   CHECKOUT
+============================================================ */
+.checkout {
+  padding: 0 1.2rem 1.2rem;
+  border-top: 1px solid var(--crema-borde);
+}
+
+.checkout h2 {
+  padding-left: 0;
+  padding-right: 0;
+  border-bottom: none;
+  margin-bottom: 0.75rem;
+}
+
+.checkout form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.checkout input {
+  width: 100%;
+  min-height: 2.4rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--crema-borde);
+  border-radius: 2px;
+  background: var(--crema);
+  color: var(--negro);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.checkout input:focus {
+  border-color: var(--oro);
+}
+
+.checkout input::placeholder {
+  color: var(--gris-suave);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+}
+
+.checkout button[type="submit"] {
+  min-height: 2.6rem;
+  background: var(--negro);
+  color: var(--oro);
+  border: 1px solid var(--negro);
+  border-radius: 2px;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.checkout button[type="submit"]:hover {
+  background: var(--oro);
+  color: var(--negro);
+  border-color: var(--oro);
+}
+
+.mensaje {
+  font-size: 0.82rem;
+  color: var(--oro);
+  font-style: italic;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .carrito {
+    position: static;
+  }
+}
